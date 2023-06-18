@@ -9,7 +9,7 @@
     },
     "require": {
         "php": "^7.4|^8.0",
-        "filament/filament": "^1.6"
+        "filament/filament": "^2.0"
     },
     "autoload": {
         "psr-4": {

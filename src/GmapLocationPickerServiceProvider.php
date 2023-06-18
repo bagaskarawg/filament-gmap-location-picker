@@ -3,44 +3,27 @@
 namespace Sadiq\GMapLocationPicker;
 
 use Filament\PluginServiceProvider;
+use Spatie\LaravelPackageTools\Package;
 
 class GmapLocationPickerServiceProvider extends PluginServiceProvider
 {
-    public function register()
+    protected array $beforeCoreScripts = [
+        'gmap-script' => __DIR__ . '/../resources/js/map.js',
+        'gmap-location-picker-script' => __DIR__ . '/../resources/js/app.js',
+    ];
+
+    public function configurePackage(Package $package): void
+    {
+        $package->name('gmap-location-picker')
+            ->hasViews();
+    }
+
+    protected function getScriptData(): array
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/gmap-location-picker.php', 'gmap-location-picker');
-    }
 
-    public function boot()
-    {
-        $this->bootLoaders();
-        $this->bootPublishing();
-    }
-
-    protected function bootLoaders()
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'gmap-location-picker');
-
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'gmap-location-picker');
-    }
-
-    protected function bootPublishing()
-    {
-        if (!$this->app->runningInConsole()) {
-            return;
-        }
-
-        $this->publishes([
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/gmap-location-picker'),
-        ], 'gmap-location-picker-lang');
-
-        $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/gmap-location-picker'),
-        ], 'gmap-location-picker-views');
-
-        $this->publishes(
-            [__DIR__ . '/../config/gmap-location-picker.php' => config_path('gmap-location-picker.php')],
-            'gmap-location-picker-config'
-        );
+        return [
+            'googleMapKey' => config('gmap-location-picker.key'),
+        ];
     }
 }

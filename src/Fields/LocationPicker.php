@@ -6,7 +6,7 @@ use Filament\Forms\Components\Field;
 
 class LocationPicker extends Field
 {
-    public $view = 'gmap-location-picker::fields.location-picker';
+    public string $view = 'gmap-location-picker::fields.location-picker';
 
     protected $defaultZoom = 3;
 

@@ -10,6 +10,11 @@ class LocationPicker extends Field
 
     protected $defaultZoom = 3;
 
+    protected $center = [
+        'lat' => 0,
+        'lng' => 0,
+    ];
+
     protected $controls = [
         'mapTypeControl' => false,
         'scaleControl' => true,
@@ -38,6 +43,24 @@ class LocationPicker extends Field
     public function defaultZoom($defaultZoom)
     {
         $this->defaultZoom = $defaultZoom;
+
+        return $this;
+    }
+
+    public function getCenter()
+    {
+        return json_encode($this->center);
+    }
+
+    /**
+     * set map default center
+     *
+     * @param array $center
+     * @return $this
+     */
+    public function center($center)
+    {
+        $this->center = $center;
 
         return $this;
     }

@@ -1,11 +1,11 @@
 function googleMapPicker(config) {
     return {
-        value: config.value,
+        state: config.state,
         zoom: config.zoom,
         init: async function () {
             var center = {
-                lat: this?.value?.lat || 0,
-                lng: this?.value?.lng || 0
+                lat: this?.state?.lat || 0,
+                lng: this?.state?.lng || 0
             }
 
             const { Map } = await google.maps.importLibrary('maps');
@@ -23,7 +23,8 @@ function googleMapPicker(config) {
             })
 
             map.addListener('click', (event) => {
-                this.value = event.latLng.toJSON();
+                this.state = event.latLng.toJSON();
+                console.log(this.state)
             });
 
             if (config.controls.searchBoxControl) {
@@ -33,16 +34,15 @@ function googleMapPicker(config) {
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
                 searchBox.addListener("places_changed", () => {
                     input.value = ''
-                    this.value = searchBox.getPlaces()[0].geometry.location
+                    this.state = searchBox.getPlaces()[0].geometry.location
                 })
             }
 
-            this.$watch('value', () => {
-                let position = this.value
+            this.$watch('state', () => {
+                let position = this.state
                 marker.setPosition(position)
                 map.panTo(position)
             })
         }
-
     }
 }

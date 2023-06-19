@@ -13,7 +13,8 @@
     <div wire:ignore x-data="googleMapPicker({
             state: $wire.{{ $applyStateBindingModifiers('entangle(\'' . $getStatePath() . '\')') }},
             zoom: {{$getDefaultZoom()}},
-            controls: {{$getMapControls()}}
+            controls: {{$getMapControls()}},
+            center: {{$getCenter()}}
         })" x-init="init()">
         @if($isSearchBoxControlEnabled())
         <input x-ref="pacinput" type="text" placeholder="Search Box" style="top: 10px; width: 50%;" />

@@ -11,9 +11,7 @@
     :required="$isRequired()"
     :state-path="$getStatePath()">
     <div wire:ignore x-data="googleMapPicker({
-            @if ($attributes->get('wire:model'))
-                value: @entangle($getName()){{ $attributes->get('wire:model') }},
-            @endif
+            state: $wire.{{ $applyStateBindingModifiers('entangle(\'' . $getStatePath() . '\')') }},
             zoom: {{$getDefaultZoom()}},
             controls: {{$getMapControls()}}
         })" x-init="init()">

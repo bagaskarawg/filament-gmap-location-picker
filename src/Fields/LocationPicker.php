@@ -37,9 +37,7 @@ class LocationPicker extends Field
      */
     public function defaultZoom($defaultZoom)
     {
-        $this->configure(function () use ($defaultZoom) {
-            $this->defaultZoom = $defaultZoom;
-        });
+        $this->defaultZoom = $defaultZoom;
 
         return $this;
     }

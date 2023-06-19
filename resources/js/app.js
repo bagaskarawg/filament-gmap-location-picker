@@ -1,7 +1,7 @@
 function googleMapPicker(config) {
     const state = {
-        lat: config.state.initialValue.coordinates[0],
-        lng: config.state.initialValue.coordinates[1],
+        lat: config.state.initialValue ? config.state.initialValue.coordinates[0] : config?.center?.lat || 0,
+        lng: config.state.initialValue ? config.state.initialValue.coordinates[1] : config?.center?.lng || 0,
     }
 
     return {
@@ -10,8 +10,8 @@ function googleMapPicker(config) {
         zoom: config.zoom,
         init: async function () {
             var center = {
-                lat: this?.state?.lat || 0,
-                lng: this?.state?.lng || 0
+                lat: this?.state?.lat || config?.center?.lat || 0,
+                lng: this?.state?.lng || config?.center?.lng || 0
             }
 
             const { Map } = await google.maps.importLibrary('maps');

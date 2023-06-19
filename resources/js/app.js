@@ -1,6 +1,12 @@
 function googleMapPicker(config) {
+    const state = {
+        lat: config.state.initialValue.coordinates[0],
+        lng: config.state.initialValue.coordinates[1],
+    }
+
     return {
-        state: config.state,
+        state,
+        wireState: config.state,
         zoom: config.zoom,
         init: async function () {
             var center = {
@@ -33,14 +39,17 @@ function googleMapPicker(config) {
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
                 searchBox.addListener("places_changed", () => {
                     input.value = ''
-                    this.state = searchBox.getPlaces()[0].geometry.location
+                    const coordination = searchBox.getPlaces()[0].geometry.location;
+                    this.state = {lat: coordination.lat(), lng: coordination.lng()};
                 })
             }
 
             this.$watch('state', () => {
-                let position = this.state
+                let position = this.state;
                 marker.setPosition(position)
                 map.panTo(position)
+
+                this.wireState = this.state;
             })
         }
     }

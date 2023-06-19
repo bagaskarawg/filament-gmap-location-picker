@@ -24,7 +24,6 @@ function googleMapPicker(config) {
 
             map.addListener('click', (event) => {
                 this.state = event.latLng.toJSON();
-                console.log(this.state)
             });
 
             if (config.controls.searchBoxControl) {
